@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Sistema Solar</title>
+    <style>
+        body { 
+            background-color: #050510; 
+            color: #ffffff; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            padding: 20px; 
+        }
+        .container { 
+            background: #101026; 
+            padding: 30px; 
+            border-radius: 15px; 
+            max-width: 500px; 
+            margin: 20px auto; 
+            border: 2px solid #3b3b98;
+        }
+        .status { 
+            display: flex; 
+            justify-content: space-around; 
+            margin-bottom: 20px; 
+            background: #1b1b3a; 
+            padding: 10px; 
+            border-radius: 8px;
+        }
+        button { 
+            background: #ff4757; 
+            color: white; 
+            border: none; 
+            padding: 12px 20px; 
+            margin: 8px; 
+            border-radius: 25px; 
+            cursor: pointer; 
+            font-size: 15px; 
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        button:hover { 
+            background: #ff6b81; 
+            transform: scale(1.05);
+        }
+        .planeta-img {
+            font-size: 50px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 Explorador do Sistema Solar</h1>
+    
+    <div class="container">
+        <!-- Status de Sobrevivência -->
+        <div class="status">
+            <div>⛽ Combustível: <span id="combustivel">100</span>%</div>
+            <div>💨 Oxigênio: <span id="oxigenio">100</span>%</div>
+        </div>
+
+        <div class="planeta-img" id="icone">🌍</div>
+        <p id="texto-missao">Você está na órbita da Terra pronto para decolar! Escolha seu primeiro destino:</p>
+        
+        <div id="botoes">
+            <button onclick="viajar('Lua', '📉', 15, 10, 'Você pousou na Lua! Coletou poeira lunar e viu pegadas antigas de astronautas.')">Viajar para a Lua</button>
+            <button onclick="viajar('Marte', '🔴', 30, 25, 'Você chegou em Marte! Uma tempestade de areia vermelha balançou sua nave.')">Viajar para Marte</button>
+            <button onclick="viajar('Júpiter', '🪐', 50, 40, 'Júpiter é gigante e gasoso! Você colheu dados incríveis das luas dele.')">Viajar para Júpiter</button>
+        </div>
+    </div>
+
+    <script>
+        let combustivel = 100;
+        let oxigenio = 100;
+
+        function viajar(nome, icone, gastoGas, gastoOxi, mensagem) {
+            // Desconta os recursos
+            combustivel -= gastoGas;
+            oxigenio -= gastoOxi;
+
+            // Atualiza a tela
+            document.getElementById('combustivel').innerText = combustivel;
+            document.getElementById('oxigenio').innerText = oxigenio;
+            document.getElementById('icone').innerText = icone;
+
+            // Testa se o jogador perdeu
+            if (combustivel <= 0 || oxigenio <= 0) {
+                document.getElementById('combustivel').innerText = "0";
+                document.getElementById('oxigenio').innerText = "0";
+                document.getElementById('texto-missao').innerText = "🚨 Fim de jogo! Seus recursos acabaram e você ficou flutuando no espaço profundo... Recarregue a página para tentar de novo!";
+                document.getElementById('botoes').innerHTML = '<button onclick="window.location.reload()">Reiniciar Missão</button>';
+                return;
+            }
+
+            // Se ainda tiver combustível, continua a viagem
+            document.getElementById('texto-missao').innerText = `${mensagem} Para onde sua tripulação vai agora?`;
+        }
+    </script>
+</body>
+</html>
